@@ -1,12 +1,15 @@
 /**
  * Array based storage for Resumes
- *  @autor Maksim P.
- *  @version 0.1
- *  @lastChanges (2019.07.17) Maksim P.
+ *
+ * @version 0.1
+ * @autor Maksim P.
+ * @lastChanges (2019.07.17) Maksim P.
  */
 public class ArrayStorage {
 
-    /**Numbers of entries in the array*/
+    /**
+     * Numbers of entries in the array
+     */
     private int countResume = 0;
 
     Resume[] storage = new Resume[10000];
@@ -24,19 +27,18 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        Resume resume = null;
-        for (int i = 0; i < size(); i++) {
-            if (storage[i].toString().equals(uuid)){
-                resume = storage[i];
+        for (int i = 0; i < countResume; i++) {
+            if (storage[i].toString().equals(uuid)) {
+                return storage[i];
             }
         }
-        return resume;
+        return null;
     }
 
     void delete(String uuid) {
         int position = -1;
         for (int i = 0; i < size(); i++) {
-            if (storage[i].toString().equals(uuid)){
+            if (storage[i].toString().equals(uuid)) {
                 position = i;
                 break;
             }
@@ -46,7 +48,7 @@ public class ArrayStorage {
                 storage[i] = storage[i + 1];
             }
             countResume--;
-        }else {
+        } else {
             System.out.println("uuid not found");
         }
     }
@@ -57,7 +59,7 @@ public class ArrayStorage {
     Resume[] getAll() {
 //        return new Resume[0];
         Resume[] resumes = new Resume[size()];
-        System.arraycopy (storage, 0, resumes, 0, size());
+        System.arraycopy(storage, 0, resumes, 0, size());
         return resumes;
     }
 

@@ -37,14 +37,14 @@ public class ArrayStorage {
 
     void delete(String uuid) {
         int position = -1;
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < countResume; i++) {
             if (storage[i].toString().equals(uuid)) {
                 position = i;
                 break;
             }
         }
         if (position != -1) {
-            for (int i = position; i < size(); i++) {
+            for (int i = position; i < countResume; i++) {
                 storage[i] = storage[i + 1];
             }
             countResume--;
@@ -58,8 +58,8 @@ public class ArrayStorage {
      */
     Resume[] getAll() {
 //        return new Resume[0];
-        Resume[] resumes = new Resume[size()];
-        System.arraycopy(storage, 0, resumes, 0, size());
+        Resume[] resumes = new Resume[countResume];
+        System.arraycopy(storage, 0, resumes, 0, countResume);
         return resumes;
     }
 

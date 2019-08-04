@@ -9,36 +9,31 @@ import java.util.Arrays;
  *
  * @autor Maksim P.
  */
-public class ArrayStorage implements Storage {
-
-    private static final int SIZE_STORAGE = 10000;
-    private int countResume = 0;
-
-    private Resume[] storage = new Resume[SIZE_STORAGE];
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void clear() {
-        Arrays.fill(storage, 0, countResume, null);
-        countResume = 0;
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     public void save(Resume resume) {
-        if (countResume == SIZE_STORAGE) {
+        if (size == SIZE_STORAGE) {
             System.out.println("Cannot be saved: the storage is full!");
             return;
         }
         if (resume != null) {
-            if (findIndex(resume.getUuid()) != -1) {
+            if (getIndex(resume.getUuid()) != -1) {
                 System.out.println("ru.javawebinar.basejava.model.Resume " + resume.getUuid() + "already exists!");
                 return;
             }
-            storage[countResume] = resume;
-            countResume++;
+            storage[size] = resume;
+            size++;
         }
     }
 
     public void update(Resume resume) {
         if (resume != null) {
-            int index = findIndex(resume.getUuid());
+            int index = getIndex(resume.getUuid());
             if (index != -1) {
                 storage[index] = resume;
             } else {
@@ -47,37 +42,23 @@ public class ArrayStorage implements Storage {
         }
     }
 
-    public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index != -1) {
-            return storage[index];
-        } else {
-            System.out.println("ru.javawebinar.basejava.model.Resume (uuid: " + uuid + ") not found");
-            return null;
-        }
-    }
-
     public void delete(String uuid) {
-        int index = findIndex(uuid);
+        int index = getIndex(uuid);
         if (index != -1) {
-            storage[index] = storage[countResume - 1];
-            storage[countResume - 1] = null;
-            countResume--;
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         } else {
             System.out.println("ru.javawebinar.basejava.model.Resume (uuid: " + uuid + ") not found");
         }
     }
 
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, countResume);
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
-    public int size() {
-        return countResume;
-    }
-
-    private int findIndex(String uuid) {
-        for (int i = 0; i < countResume; i++) {
+    protected int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }

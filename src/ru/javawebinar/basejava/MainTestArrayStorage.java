@@ -2,12 +2,18 @@ package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.ArrayStorage;
+import ru.javawebinar.basejava.storage.SortedArrayStorage;
+import ru.javawebinar.basejava.storage.Storage;
 
 /**
  * Test for your ru.javawebinar.basejava.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage NOT_SORTED_ARRAY_STORAGE = new ArrayStorage();
+    private static final Storage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
+
+//    private static final Storage ARRAY_STORAGE = NOT_SORTED_ARRAY_STORAGE;
+    private static final Storage ARRAY_STORAGE = SORTED_ARRAY_STORAGE;
 
     public static void main(String[] args) {
         Resume r1 = new Resume();

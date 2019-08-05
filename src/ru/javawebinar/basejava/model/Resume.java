@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.Objects;
-
 /**
  * Initial resume class
  */

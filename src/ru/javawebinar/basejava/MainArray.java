@@ -18,8 +18,8 @@ public class MainArray {
     private final static Storage NOT_SORTED_ARRAY_STORAGE = new ArrayStorage();
     private static final Storage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
 
-//    private static final Storage ARRAY_STORAGE = NOT_SORTED_ARRAY_STORAGE;
-private static final Storage ARRAY_STORAGE = SORTED_ARRAY_STORAGE;
+    //    private static final Storage ARRAY_STORAGE = NOT_SORTED_ARRAY_STORAGE;
+    private static final Storage ARRAY_STORAGE = SORTED_ARRAY_STORAGE;
 
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

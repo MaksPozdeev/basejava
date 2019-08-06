@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Arrays;
 
 /**
- * @autor Maksim P.
+ * Maksim P.
  * 04.08.2019
  */
 public class SortedArrayStorage extends AbstractArrayStorage {

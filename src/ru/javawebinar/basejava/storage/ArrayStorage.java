@@ -4,8 +4,7 @@ import ru.javawebinar.basejava.model.Resume;
 
 /**
  * Array based storage for Resumes
- *
- * @autor Maksim P.
+ * Maksim P.
  */
 public class ArrayStorage extends AbstractArrayStorage {
 

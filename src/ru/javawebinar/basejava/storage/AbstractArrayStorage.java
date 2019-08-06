@@ -6,8 +6,7 @@ import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
- *
- * @autor Maksim P.
+ * Maksim P.
  */
 public abstract class AbstractArrayStorage implements Storage {
 
@@ -15,38 +14,38 @@ public abstract class AbstractArrayStorage implements Storage {
     protected Resume[] storage = new Resume[SIZE_STORAGE];
     protected int size = 0;
 
+    @Override
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
+    @Override
     public void save(Resume resume) {
         if (size == SIZE_STORAGE) {
             System.out.println("Cannot be saved: the storage is full!");
             return;
         }
         int index = getIndex(resume.getUuid());
-        if (resume != null) {
-            if (index >= 0) {
-                System.out.println("Resume " + resume.getUuid() + " already exists!");
-            } else {
-                insertResume(resume, index);
-                size++;
-            }
+        if (index >= 0) {
+            System.out.println("Resume " + resume.getUuid() + " already exists!");
+        } else {
+            insertResume(resume, index);
+            size++;
         }
     }
 
+    @Override
     public void update(Resume resume) {
-        if (resume != null) {
-            int index = getIndex(resume.getUuid());
-            if (index == -1) {
-                System.out.println("Resume not found");
-            } else {
-                storage[index] = resume;
-            }
+        int index = getIndex(resume.getUuid());
+        if (index < 0) {
+            System.out.println("Resume " + resume.getUuid() + " not exist");
+        } else {
+            storage[index] = resume;
         }
     }
 
+    @Override
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
@@ -58,19 +57,22 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
+    @Override
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) {
+        if (index < 0) {
             System.out.println("Resume (uuid: " + uuid + ") not exist");
             return null;
         }
         return storage[index];
     }
 
+    @Override
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
     }
 
+    @Override
     public int size() {
         return size;
     }

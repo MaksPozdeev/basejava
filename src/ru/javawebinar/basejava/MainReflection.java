@@ -1,4 +1,4 @@
-package ru.javawebinar.basejava.storage;
+package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
 
@@ -15,7 +15,7 @@ public class MainReflection {
         field.set(resume, "uuidValue_02");
         System.out.println(resume);
 
-        Class clss = resume.getClass();
+        Class<? extends Resume> class1 = resume.getClass();
         //        class methods
         /*System.out.println("Methods");
         Method[] methods = clss.getDeclaredMethods();
@@ -31,7 +31,7 @@ public class MainReflection {
         }*/
 
         System.out.println();
-        Method method = clss.getMethod("toString");
+        Method method = class1.getMethod("toString");
         String strResult = (String) method.invoke(resume);
         System.out.println("Running \"toString\" from Reflection: "+ strResult);
     }

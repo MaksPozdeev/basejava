@@ -8,11 +8,9 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public abstract class AbstractArrayStorageTest {
+abstract class AbstractArrayStorageTest {
     private Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -21,12 +19,10 @@ public abstract class AbstractArrayStorageTest {
     private static final Resume RESUME_2 = new Resume(UUID_2);
     private static final String UUID_3 = "uuid3";
     private static final Resume RESUME_3 = new Resume(UUID_3);
-
     private static final String UUID_4 = "uuid4";
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
-    //    Constructor
-    AbstractArrayStorageTest(Storage storage) {
+    protected AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -53,7 +49,7 @@ public abstract class AbstractArrayStorageTest {
     void save() {
         storage.save(RESUME_4);
         assertEquals(4, storage.size());
-        assertSame(storage.get(UUID_4), RESUME_4);
+        assertSame(RESUME_4, storage.get(UUID_4));
     }
 
     @Test
@@ -61,27 +57,23 @@ public abstract class AbstractArrayStorageTest {
         assertThrows(ExistStorageException.class, () -> {
             storage.save(RESUME_2);
         });
-
     }
 
     @Test
     void saveOverflow(){
+        storage.clear();
+        for (int i = 0; i < AbstractArrayStorage.SIZE_STORAGE; i++) {
+            storage.save(new Resume());
+        }
         assertThrows(StorageException.class, () -> {
-            for (int i = storage.size()+1; i <= AbstractArrayStorage.SIZE_STORAGE; i++) {
-                storage.save(new Resume());
-            }
             storage.save(new Resume());
         });
     }
 
-    //        2 варианта для update:
-//        1. Запись есть и нужно обновить/заменить
-//        2. Обновляемой записи нет -> нечего обновлять -> notExistException (updateNotExist)
     @Test
     void update() {
         Resume resumeUpdate = new Resume(UUID_2);
         storage.update(resumeUpdate);
-//        assertEquals(resumeUpdate, storage.get(UUID_2));
         assertSame(resumeUpdate, storage.get(UUID_2));
     }
 
@@ -92,9 +84,6 @@ public abstract class AbstractArrayStorageTest {
         });
     }
 
-    //        2 варианта для delete:
-//        1. Запись есть -> удаляем + размер = размер - 1 -> удалённый обект notExistException
-//        2. Удаляемой записи нет -> notExistException (deleteNotExist)
     @Test
     void delete() {
         storage.delete(UUID_2);
@@ -111,15 +100,11 @@ public abstract class AbstractArrayStorageTest {
         });
     }
 
-    //        2 варианта для get:
-//        1. Запись есть -> получаем сравниваем
-//        2. Записи нет -> notExistException (getNotExist)
     @Test
     void get() {
-        assertSame(RESUME_1, storage.get(UUID_1));
-        assertSame(RESUME_2, storage.get(UUID_2));
-        assertSame(RESUME_3, storage.get(UUID_3));
-
+        assertEquals(RESUME_1, storage.get(UUID_1));
+        assertEquals(RESUME_2, storage.get(UUID_2));
+        assertEquals(RESUME_3, storage.get(UUID_3));
     }
 
     @Test
@@ -131,10 +116,9 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     void getAll() {
-        Resume[] expected = storage.getAll();
-        Resume[] actual = {RESUME_1, RESUME_2, RESUME_3};
+        assertEquals(3, storage.size());
+        Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
+        Resume[] actual = storage.getAll();
         assertArrayEquals(expected, actual);
     }
-
-
 }

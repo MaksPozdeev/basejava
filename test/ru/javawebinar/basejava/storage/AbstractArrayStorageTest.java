@@ -80,7 +80,7 @@ abstract class AbstractArrayStorageTest {
     @Test
     void updateNotExist() {
         assertThrows(NotExistStorageException.class, () -> {
-            storage.get(UUID_4);
+            storage.update(RESUME_4);
         });
     }
 
@@ -116,9 +116,9 @@ abstract class AbstractArrayStorageTest {
 
     @Test
     void getAll() {
-        assertEquals(3, storage.size());
         Resume[] expected = {RESUME_1, RESUME_2, RESUME_3};
         Resume[] actual = storage.getAll();
+        assertEquals(3, actual.length);
         assertArrayEquals(expected, actual);
     }
 }
